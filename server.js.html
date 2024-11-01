@@ -1,0 +1,119 @@
+<html>
+<head>
+<title>server.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.s5 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+server.js</font>
+</center></td></tr></table>
+<pre><span class="s0">const </span><span class="s1">WebSocket </span><span class="s2">= </span><span class="s1">require</span><span class="s2">(</span><span class="s3">'ws'</span><span class="s2">);</span>
+
+<span class="s0">const </span><span class="s1">wss </span><span class="s2">= </span><span class="s0">new </span><span class="s1">WebSocket</span><span class="s2">.</span><span class="s1">Server</span><span class="s2">({ </span><span class="s1">port</span><span class="s2">: </span><span class="s4">3000 </span><span class="s2">});</span>
+<span class="s0">const </span><span class="s1">messageHistory </span><span class="s2">= [];</span>
+<span class="s0">const </span><span class="s1">userHiddenList </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Map</span><span class="s2">(); </span><span class="s5">// Track hidden users for each client</span>
+
+<span class="s1">wss</span><span class="s2">.</span><span class="s1">on</span><span class="s2">(</span><span class="s3">'connection'</span><span class="s2">, (</span><span class="s1">ws</span><span class="s2">) =&gt; {</span>
+    <span class="s1">console</span><span class="s2">.</span><span class="s1">log</span><span class="s2">(</span><span class="s3">'A user connected'</span><span class="s2">);</span>
+    <span class="s1">userHiddenList</span><span class="s2">.</span><span class="s1">set</span><span class="s2">(</span><span class="s1">ws</span><span class="s2">, </span><span class="s0">new </span><span class="s1">Set</span><span class="s2">()); </span><span class="s5">// Initialize empty set for the new user</span>
+    <span class="s1">ws</span><span class="s2">.</span><span class="s1">username </span><span class="s2">= </span><span class="s3">''</span><span class="s2">; </span><span class="s5">// Placeholder for username</span>
+
+    <span class="s5">// Send recent messages to the newly connected client</span>
+    <span class="s0">const </span><span class="s1">currentTime </span><span class="s2">= </span><span class="s1">Date</span><span class="s2">.</span><span class="s1">now</span><span class="s2">();</span>
+    <span class="s0">const </span><span class="s1">recentMessages </span><span class="s2">= </span><span class="s1">messageHistory</span><span class="s2">.</span><span class="s1">filter</span><span class="s2">(({ </span><span class="s1">timestamp </span><span class="s2">}) =&gt; (</span><span class="s1">currentTime </span><span class="s2">- </span><span class="s1">timestamp</span><span class="s2">) &lt;= </span><span class="s4">300000</span><span class="s2">);</span>
+    <span class="s1">recentMessages</span><span class="s2">.</span><span class="s1">forEach</span><span class="s2">(({ </span><span class="s1">username</span><span class="s2">, </span><span class="s1">color</span><span class="s2">, </span><span class="s1">message </span><span class="s2">}) =&gt; {</span>
+        <span class="s1">ws</span><span class="s2">.</span><span class="s1">send</span><span class="s2">(</span><span class="s1">JSON</span><span class="s2">.</span><span class="s1">stringify</span><span class="s2">({ </span><span class="s1">username</span><span class="s2">, </span><span class="s1">color</span><span class="s2">, </span><span class="s1">message </span><span class="s2">}));</span>
+    <span class="s2">});</span>
+
+    <span class="s5">// Notify others about the new user</span>
+    <span class="s1">ws</span><span class="s2">.</span><span class="s1">on</span><span class="s2">(</span><span class="s3">'message'</span><span class="s2">, (</span><span class="s1">message</span><span class="s2">) =&gt; {</span>
+        <span class="s0">const </span><span class="s1">data </span><span class="s2">= </span><span class="s1">JSON</span><span class="s2">.</span><span class="s1">parse</span><span class="s2">(</span><span class="s1">message</span><span class="s2">);</span>
+
+        <span class="s5">// Set username</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">data</span><span class="s2">.</span><span class="s1">type </span><span class="s2">=== </span><span class="s3">'setUsername'</span><span class="s2">) {</span>
+            <span class="s1">ws</span><span class="s2">.</span><span class="s1">username </span><span class="s2">= </span><span class="s1">data</span><span class="s2">.</span><span class="s1">username</span><span class="s2">;</span>
+            <span class="s0">const </span><span class="s1">systemMessage </span><span class="s2">= { </span><span class="s1">username</span><span class="s2">: </span><span class="s3">'System'</span><span class="s2">, </span><span class="s1">message</span><span class="s2">: </span><span class="s3">`</span><span class="s1">$</span><span class="s2">{</span><span class="s1">data</span><span class="s2">.</span><span class="s1">username</span><span class="s2">} </span><span class="s3">has joined the chat.`</span><span class="s2">, </span><span class="s1">color</span><span class="s2">: </span><span class="s3">'#00ff00' </span><span class="s2">};</span>
+            <span class="s1">messageHistory</span><span class="s2">.</span><span class="s1">push</span><span class="s2">(</span><span class="s1">systemMessage</span><span class="s2">); </span><span class="s5">// Store the system message</span>
+            <span class="s1">wss</span><span class="s2">.</span><span class="s1">clients</span><span class="s2">.</span><span class="s1">forEach</span><span class="s2">(</span><span class="s1">client </span><span class="s2">=&gt; {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">client</span><span class="s2">.</span><span class="s1">readyState </span><span class="s2">=== </span><span class="s1">WebSocket</span><span class="s2">.</span><span class="s1">OPEN</span><span class="s2">) {</span>
+                    <span class="s1">client</span><span class="s2">.</span><span class="s1">send</span><span class="s2">(</span><span class="s1">JSON</span><span class="s2">.</span><span class="s1">stringify</span><span class="s2">(</span><span class="s1">systemMessage</span><span class="s2">));</span>
+                <span class="s2">}</span>
+            <span class="s2">});</span>
+            <span class="s0">return</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s5">// Handle typing notifications</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">data</span><span class="s2">.</span><span class="s1">type </span><span class="s2">=== </span><span class="s3">'typing'</span><span class="s2">) {</span>
+            <span class="s1">wss</span><span class="s2">.</span><span class="s1">clients</span><span class="s2">.</span><span class="s1">forEach</span><span class="s2">((</span><span class="s1">client</span><span class="s2">) =&gt; {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">client</span><span class="s2">.</span><span class="s1">readyState </span><span class="s2">=== </span><span class="s1">WebSocket</span><span class="s2">.</span><span class="s1">OPEN </span><span class="s2">&amp;&amp; </span><span class="s1">client </span><span class="s2">!== </span><span class="s1">ws</span><span class="s2">) {</span>
+                    <span class="s1">client</span><span class="s2">.</span><span class="s1">send</span><span class="s2">(</span><span class="s1">JSON</span><span class="s2">.</span><span class="s1">stringify</span><span class="s2">({ </span><span class="s1">username</span><span class="s2">: </span><span class="s1">data</span><span class="s2">.</span><span class="s1">username</span><span class="s2">, </span><span class="s1">typing</span><span class="s2">: </span><span class="s0">true </span><span class="s2">}));</span>
+                <span class="s2">}</span>
+            <span class="s2">});</span>
+            <span class="s0">return</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s5">// Handle whisper messages</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">data</span><span class="s2">.</span><span class="s1">type </span><span class="s2">=== </span><span class="s3">'whisper'</span><span class="s2">) {</span>
+            <span class="s0">const </span><span class="s1">recipient </span><span class="s2">= </span><span class="s1">data</span><span class="s2">.</span><span class="s1">recipient</span><span class="s2">;</span>
+            <span class="s0">const </span><span class="s1">whisperMessage </span><span class="s2">= </span><span class="s1">data</span><span class="s2">.</span><span class="s1">message</span><span class="s2">;</span>
+
+            <span class="s5">// Check if the recipient is online</span>
+            <span class="s0">let </span><span class="s1">recipientFound </span><span class="s2">= </span><span class="s0">false</span><span class="s2">;</span>
+            <span class="s1">wss</span><span class="s2">.</span><span class="s1">clients</span><span class="s2">.</span><span class="s1">forEach</span><span class="s2">((</span><span class="s1">client</span><span class="s2">) =&gt; {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">client</span><span class="s2">.</span><span class="s1">readyState </span><span class="s2">=== </span><span class="s1">WebSocket</span><span class="s2">.</span><span class="s1">OPEN </span><span class="s2">&amp;&amp; </span><span class="s1">client</span><span class="s2">.</span><span class="s1">username </span><span class="s2">=== </span><span class="s1">recipient</span><span class="s2">) {</span>
+                    <span class="s1">recipientFound </span><span class="s2">= </span><span class="s0">true</span><span class="s2">;</span>
+                    <span class="s0">const </span><span class="s1">whisperData </span><span class="s2">= { </span><span class="s1">username</span><span class="s2">: </span><span class="s1">ws</span><span class="s2">.</span><span class="s1">username</span><span class="s2">, </span><span class="s1">color</span><span class="s2">: </span><span class="s1">data</span><span class="s2">.</span><span class="s1">color</span><span class="s2">, </span><span class="s1">message</span><span class="s2">: </span><span class="s1">whisperMessage</span><span class="s2">, </span><span class="s1">whisper</span><span class="s2">: </span><span class="s0">true </span><span class="s2">};</span>
+                    <span class="s1">client</span><span class="s2">.</span><span class="s1">send</span><span class="s2">(</span><span class="s1">JSON</span><span class="s2">.</span><span class="s1">stringify</span><span class="s2">(</span><span class="s1">whisperData</span><span class="s2">)); </span><span class="s5">// Send to the recipient</span>
+                    <span class="s1">ws</span><span class="s2">.</span><span class="s1">send</span><span class="s2">(</span><span class="s1">JSON</span><span class="s2">.</span><span class="s1">stringify</span><span class="s2">(</span><span class="s1">whisperData</span><span class="s2">)); </span><span class="s5">// Send back to the sender</span>
+                <span class="s2">}</span>
+            <span class="s2">});</span>
+
+            <span class="s5">// Notify sender if the recipient was not found</span>
+            <span class="s0">if </span><span class="s2">(!</span><span class="s1">recipientFound</span><span class="s2">) {</span>
+                <span class="s1">ws</span><span class="s2">.</span><span class="s1">send</span><span class="s2">(</span><span class="s1">JSON</span><span class="s2">.</span><span class="s1">stringify</span><span class="s2">({ </span><span class="s1">username</span><span class="s2">: </span><span class="s3">'System'</span><span class="s2">, </span><span class="s1">color</span><span class="s2">: </span><span class="s3">'#ff0000'</span><span class="s2">, </span><span class="s1">message</span><span class="s2">: </span><span class="s3">`User </span><span class="s1">$</span><span class="s2">{</span><span class="s1">recipient</span><span class="s2">} </span><span class="s3">not found.`</span><span class="s2">, </span><span class="s1">whisper</span><span class="s2">: </span><span class="s0">true </span><span class="s2">}));</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s5">// Store and broadcast regular messages</span>
+            <span class="s0">const </span><span class="s1">timestampedMessage </span><span class="s2">= { </span><span class="s1">username</span><span class="s2">: </span><span class="s1">ws</span><span class="s2">.</span><span class="s1">username</span><span class="s2">, </span><span class="s1">color</span><span class="s2">: </span><span class="s1">data</span><span class="s2">.</span><span class="s1">color</span><span class="s2">, </span><span class="s1">message</span><span class="s2">: </span><span class="s1">data</span><span class="s2">.</span><span class="s1">message</span><span class="s2">, </span><span class="s1">timestamp</span><span class="s2">: </span><span class="s1">Date</span><span class="s2">.</span><span class="s1">now</span><span class="s2">() };</span>
+            <span class="s1">console</span><span class="s2">.</span><span class="s1">log</span><span class="s2">(</span><span class="s3">'Received:'</span><span class="s2">, </span><span class="s1">timestampedMessage</span><span class="s2">.</span><span class="s1">message</span><span class="s2">);</span>
+            <span class="s1">messageHistory</span><span class="s2">.</span><span class="s1">push</span><span class="s2">(</span><span class="s1">timestampedMessage</span><span class="s2">);</span>
+
+            <span class="s5">// Broadcast message to all clients except hidden users</span>
+            <span class="s1">wss</span><span class="s2">.</span><span class="s1">clients</span><span class="s2">.</span><span class="s1">forEach</span><span class="s2">((</span><span class="s1">client</span><span class="s2">) =&gt; {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">client</span><span class="s2">.</span><span class="s1">readyState </span><span class="s2">=== </span><span class="s1">WebSocket</span><span class="s2">.</span><span class="s1">OPEN </span><span class="s2">&amp;&amp; !</span><span class="s1">userHiddenList</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">client</span><span class="s2">).</span><span class="s1">has</span><span class="s2">(</span><span class="s1">ws</span><span class="s2">.</span><span class="s1">username</span><span class="s2">)) {</span>
+                    <span class="s1">client</span><span class="s2">.</span><span class="s1">send</span><span class="s2">(</span><span class="s1">JSON</span><span class="s2">.</span><span class="s1">stringify</span><span class="s2">(</span><span class="s1">timestampedMessage</span><span class="s2">));</span>
+                <span class="s2">}</span>
+            <span class="s2">});</span>
+        <span class="s2">}</span>
+    <span class="s2">});</span>
+
+    <span class="s5">// Notify others when a user disconnects</span>
+    <span class="s1">ws</span><span class="s2">.</span><span class="s1">on</span><span class="s2">(</span><span class="s3">'close'</span><span class="s2">, () =&gt; {</span>
+        <span class="s1">console</span><span class="s2">.</span><span class="s1">log</span><span class="s2">(</span><span class="s3">'A user disconnected'</span><span class="s2">);</span>
+        <span class="s0">const </span><span class="s1">disconnectMessage </span><span class="s2">= { </span><span class="s1">username</span><span class="s2">: </span><span class="s3">'System'</span><span class="s2">, </span><span class="s1">message</span><span class="s2">: </span><span class="s3">`</span><span class="s1">$</span><span class="s2">{</span><span class="s1">ws</span><span class="s2">.</span><span class="s1">username</span><span class="s2">} </span><span class="s3">has left the chat.`</span><span class="s2">, </span><span class="s1">color</span><span class="s2">: </span><span class="s3">'#ff0000' </span><span class="s2">};</span>
+        <span class="s1">messageHistory</span><span class="s2">.</span><span class="s1">push</span><span class="s2">(</span><span class="s1">disconnectMessage</span><span class="s2">); </span><span class="s5">// Store the system message</span>
+        <span class="s1">userHiddenList</span><span class="s2">.</span><span class="s1">delete</span><span class="s2">(</span><span class="s1">ws</span><span class="s2">); </span><span class="s5">// Clean up on disconnect</span>
+
+        <span class="s5">// Notify other clients</span>
+        <span class="s1">wss</span><span class="s2">.</span><span class="s1">clients</span><span class="s2">.</span><span class="s1">forEach</span><span class="s2">(</span><span class="s1">client </span><span class="s2">=&gt; {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">client</span><span class="s2">.</span><span class="s1">readyState </span><span class="s2">=== </span><span class="s1">WebSocket</span><span class="s2">.</span><span class="s1">OPEN</span><span class="s2">) {</span>
+                <span class="s1">client</span><span class="s2">.</span><span class="s1">send</span><span class="s2">(</span><span class="s1">JSON</span><span class="s2">.</span><span class="s1">stringify</span><span class="s2">(</span><span class="s1">disconnectMessage</span><span class="s2">));</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+    <span class="s2">});</span>
+<span class="s2">});</span>
+
+<span class="s1">console</span><span class="s2">.</span><span class="s1">log</span><span class="s2">(</span><span class="s3">'WebSocket server is running on ws://localhost:3000'</span><span class="s2">);</span>
+</pre>
+</body>
+</html>

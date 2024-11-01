@@ -1,0 +1,264 @@
+<html>
+<head>
+<title>index.html</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #d5b778;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bababa;}
+.s3 { color: #6aab73;}
+.s4 { color: #56a8f5;}
+.s5 { color: #2aacb8;}
+.s6 { color: #cf8e6d;}
+.s7 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+index.html</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;!DOCTYPE </span><span class="s2">html</span><span class="s0">&gt;</span>
+<span class="s0">&lt;html </span><span class="s2">lang</span><span class="s3">=&quot;en&quot;</span><span class="s0">&gt;</span>
+<span class="s0">&lt;head&gt;</span>
+    <span class="s0">&lt;meta </span><span class="s2">charset</span><span class="s3">=&quot;UTF-8&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;meta </span><span class="s2">name</span><span class="s3">=&quot;viewport&quot; </span><span class="s2">content</span><span class="s3">=&quot;width=device-width, initial-scale=1.0&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;title&gt;</span><span class="s1">Let's All Chat</span><span class="s0">&lt;/title&gt;</span>
+    <span class="s0">&lt;style&gt;</span>
+        <span class="s0">body </span><span class="s1">{</span>
+            <span class="s2">font-family</span><span class="s1">: </span><span class="s0">Arial</span><span class="s1">, </span><span class="s3">sans-serif</span><span class="s1">;</span>
+            <span class="s2">background-color</span><span class="s1">: </span><span class="s4">#1a1a1a</span><span class="s1">;</span>
+            <span class="s2">color</span><span class="s1">: </span><span class="s4">#f0f0f0</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s0">#messages </span><span class="s1">{</span>
+            <span class="s2">border</span><span class="s1">: </span><span class="s5">1</span><span class="s3">px solid </span><span class="s4">#444</span><span class="s1">;</span>
+            <span class="s2">height</span><span class="s1">: </span><span class="s5">300</span><span class="s3">px</span><span class="s1">;</span>
+            <span class="s2">overflow-y</span><span class="s1">: </span><span class="s3">scroll</span><span class="s1">;</span>
+            <span class="s2">margin-bottom</span><span class="s1">: </span><span class="s5">10</span><span class="s3">px</span><span class="s1">;</span>
+            <span class="s2">padding</span><span class="s1">: </span><span class="s5">5</span><span class="s3">px</span><span class="s1">;</span>
+            <span class="s2">background-color</span><span class="s1">: </span><span class="s4">#333</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s0">#usernameInput</span><span class="s1">, </span><span class="s0">#messageInput </span><span class="s1">{</span>
+            <span class="s2">width</span><span class="s1">: </span><span class="s5">80</span><span class="s1">%;</span>
+            <span class="s2">background-color</span><span class="s1">: </span><span class="s4">#222</span><span class="s1">;</span>
+            <span class="s2">color</span><span class="s1">: </span><span class="s4">#f0f0f0</span><span class="s1">;</span>
+            <span class="s2">border</span><span class="s1">: </span><span class="s5">1</span><span class="s3">px solid </span><span class="s4">#444</span><span class="s1">;</span>
+            <span class="s2">padding</span><span class="s1">: </span><span class="s5">10</span><span class="s3">px</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s0">#sendButton</span><span class="s1">, </span><span class="s0">#setUsernameButton </span><span class="s1">{</span>
+            <span class="s2">width</span><span class="s1">: </span><span class="s5">18</span><span class="s1">%;</span>
+            <span class="s2">background-color</span><span class="s1">: </span><span class="s4">#555</span><span class="s1">;</span>
+            <span class="s2">color</span><span class="s1">: </span><span class="s4">#f0f0f0</span><span class="s1">;</span>
+            <span class="s2">border</span><span class="s1">: </span><span class="s3">none</span><span class="s1">;</span>
+            <span class="s2">padding</span><span class="s1">: </span><span class="s5">10</span><span class="s3">px</span><span class="s1">;</span>
+            <span class="s2">cursor</span><span class="s1">: </span><span class="s3">pointer</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s0">#sendButton</span><span class="s1">:</span><span class="s0">hover</span><span class="s1">, </span><span class="s0">#setUsernameButton</span><span class="s1">:</span><span class="s0">hover </span><span class="s1">{</span>
+            <span class="s2">background-color</span><span class="s1">: </span><span class="s4">#666</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s1">.</span><span class="s0">message </span><span class="s1">{</span>
+            <span class="s2">margin</span><span class="s1">: </span><span class="s5">5</span><span class="s3">px </span><span class="s5">0</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s0">#hiddenUsers </span><span class="s1">{</span>
+            <span class="s2">margin-top</span><span class="s1">: </span><span class="s5">10</span><span class="s3">px</span><span class="s1">;</span>
+            <span class="s2">background-color</span><span class="s1">: </span><span class="s4">#444</span><span class="s1">;</span>
+            <span class="s2">padding</span><span class="s1">: </span><span class="s5">10</span><span class="s3">px</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s1">.</span><span class="s0">hiddenUser </span><span class="s1">{</span>
+            <span class="s2">cursor</span><span class="s1">: </span><span class="s3">pointer</span><span class="s1">;</span>
+            <span class="s2">color</span><span class="s1">: </span><span class="s4">#ffcccc</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s1">.</span><span class="s0">dropdown </span><span class="s1">{</span>
+            <span class="s2">display</span><span class="s1">: </span><span class="s3">none</span><span class="s1">;</span>
+            <span class="s2">position</span><span class="s1">: </span><span class="s3">absolute</span><span class="s1">;</span>
+            <span class="s2">background-color</span><span class="s1">: </span><span class="s4">#333</span><span class="s1">;</span>
+            <span class="s2">border</span><span class="s1">: </span><span class="s5">1</span><span class="s3">px solid </span><span class="s4">#444</span><span class="s1">;</span>
+            <span class="s2">z-index</span><span class="s1">: </span><span class="s5">1</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s1">.</span><span class="s0">dropdown button </span><span class="s1">{</span>
+            <span class="s2">background</span><span class="s1">: </span><span class="s3">none</span><span class="s1">;</span>
+            <span class="s2">color</span><span class="s1">: </span><span class="s4">#fff</span><span class="s1">;</span>
+            <span class="s2">border</span><span class="s1">: </span><span class="s3">none</span><span class="s1">;</span>
+            <span class="s2">padding</span><span class="s1">: </span><span class="s5">10</span><span class="s3">px</span><span class="s1">;</span>
+            <span class="s2">width</span><span class="s1">: </span><span class="s5">100</span><span class="s1">%;</span>
+            <span class="s2">text-align</span><span class="s1">: </span><span class="s3">left</span><span class="s1">;</span>
+            <span class="s2">cursor</span><span class="s1">: </span><span class="s3">pointer</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s1">.</span><span class="s0">dropdown button</span><span class="s1">:</span><span class="s0">hover </span><span class="s1">{</span>
+            <span class="s2">background-color</span><span class="s1">: </span><span class="s4">#555</span><span class="s1">;</span>
+        <span class="s1">}</span>
+    <span class="s0">&lt;/style&gt;</span>
+<span class="s0">&lt;/head&gt;</span>
+<span class="s0">&lt;body&gt;</span>
+
+<span class="s0">&lt;h2&gt;</span><span class="s1">Let's All Chat</span><span class="s0">&lt;/h2&gt;</span>
+<span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;usernameSection&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;input </span><span class="s2">id</span><span class="s3">=&quot;usernameInput&quot; </span><span class="s2">type</span><span class="s3">=&quot;text&quot; </span><span class="s2">placeholder</span><span class="s3">=&quot;Enter your username...&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;input </span><span class="s2">type</span><span class="s3">=&quot;color&quot; </span><span class="s2">id</span><span class="s3">=&quot;colorInput&quot; </span><span class="s2">value</span><span class="s3">=&quot;#ffffff&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;button </span><span class="s2">id</span><span class="s3">=&quot;setUsernameButton&quot;</span><span class="s0">&gt;</span><span class="s1">Set Username</span><span class="s0">&lt;/button&gt;</span>
+<span class="s0">&lt;/div&gt;</span>
+<span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;messages&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+<span class="s0">&lt;input </span><span class="s2">id</span><span class="s3">=&quot;messageInput&quot; </span><span class="s2">type</span><span class="s3">=&quot;text&quot; </span><span class="s2">placeholder</span><span class="s3">=&quot;Type a message...&quot; </span><span class="s2">style</span><span class="s3">=&quot;</span><span class="s2">display</span><span class="s1">: </span><span class="s3">none</span><span class="s1">;</span><span class="s3">&quot; </span><span class="s0">/&gt;</span>
+<span class="s0">&lt;button </span><span class="s2">id</span><span class="s3">=&quot;sendButton&quot; </span><span class="s2">style</span><span class="s3">=&quot;</span><span class="s2">display</span><span class="s1">: </span><span class="s3">none</span><span class="s1">;</span><span class="s3">&quot;</span><span class="s0">&gt;</span><span class="s1">Send</span><span class="s0">&lt;/button&gt;</span>
+<span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;hiddenUsers&quot; </span><span class="s2">style</span><span class="s3">=&quot;</span><span class="s2">display</span><span class="s1">: </span><span class="s3">none</span><span class="s1">;</span><span class="s3">&quot;</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;h3&gt;</span><span class="s1">Hidden Users</span><span class="s0">&lt;/h3&gt;</span>
+    <span class="s0">&lt;div </span><span class="s2">id</span><span class="s3">=&quot;hiddenUsersList&quot;</span><span class="s0">&gt;&lt;/div&gt;</span>
+<span class="s0">&lt;/div&gt;</span>
+
+<span class="s0">&lt;script&gt;</span>
+    <span class="s6">const </span><span class="s1">socket = </span><span class="s6">new </span><span class="s1">WebSocket(</span><span class="s3">'ws://localhost:3000'</span><span class="s1">);</span>
+    <span class="s6">let </span><span class="s1">username = </span><span class="s3">''</span><span class="s1">;</span>
+    <span class="s6">let </span><span class="s1">userColor = </span><span class="s3">'#ffffff'</span><span class="s1">; </span><span class="s7">// Default color</span>
+    <span class="s6">const </span><span class="s1">hiddenMessages = </span><span class="s6">new </span><span class="s1">Set(); </span><span class="s7">// Track hidden users</span>
+    <span class="s6">let </span><span class="s1">messageHistory = []; </span><span class="s7">// Array to keep track of all messages</span>
+
+    <span class="s1">socket.onopen = </span><span class="s6">function</span><span class="s1">() {</span>
+        <span class="s1">console.log(</span><span class="s3">'Connected to the server'</span><span class="s1">);</span>
+    <span class="s1">};</span>
+
+    <span class="s1">socket.onmessage = </span><span class="s6">function</span><span class="s1">(event) {</span>
+        <span class="s6">const </span><span class="s1">messageData = JSON.parse(event.data);</span>
+        <span class="s1">messageHistory.push(messageData); </span><span class="s7">// Store message history</span>
+
+        <span class="s6">if </span><span class="s1">(!hiddenMessages.has(messageData.username)) {</span>
+            <span class="s6">const </span><span class="s1">messagesDiv = document.getElementById(</span><span class="s3">'messages'</span><span class="s1">);</span>
+            <span class="s6">const </span><span class="s1">messageElement = createMessageElement(messageData);</span>
+            <span class="s1">messagesDiv.appendChild(messageElement);</span>
+        <span class="s1">}</span>
+
+        <span class="s1">messagesDiv.scrollTop = messagesDiv.scrollHeight; </span><span class="s7">// Keep scroll at the bottom</span>
+        <span class="s1">updateHiddenUsersList();</span>
+    <span class="s1">};</span>
+
+    <span class="s6">function </span><span class="s1">toggleUserMessages(username) {</span>
+        <span class="s6">if </span><span class="s1">(username === </span><span class="s6">this</span><span class="s1">.username) </span><span class="s6">return</span><span class="s1">; </span><span class="s7">// Prevent hiding own messages</span>
+
+        <span class="s7">// Toggle hidden state</span>
+        <span class="s6">if </span><span class="s1">(hiddenMessages.has(username)) {</span>
+            <span class="s1">hiddenMessages.delete(username);</span>
+        <span class="s1">} </span><span class="s6">else </span><span class="s1">{</span>
+            <span class="s1">hiddenMessages.add(username);</span>
+        <span class="s1">}</span>
+
+        <span class="s7">// Refresh displayed messages</span>
+        <span class="s6">const </span><span class="s1">messagesDiv = document.getElementById(</span><span class="s3">'messages'</span><span class="s1">);</span>
+        <span class="s1">messagesDiv.innerHTML = </span><span class="s3">''</span><span class="s1">; </span><span class="s7">// Clear current messages</span>
+
+        <span class="s7">// Re-render messages based on hidden state</span>
+        <span class="s1">messageHistory.forEach(message =&gt; {</span>
+            <span class="s6">if </span><span class="s1">(!hiddenMessages.has(message.username)) {</span>
+                <span class="s6">const </span><span class="s1">messageElement = createMessageElement(message);</span>
+                <span class="s1">messagesDiv.appendChild(messageElement);</span>
+            <span class="s1">}</span>
+        <span class="s1">});</span>
+
+        <span class="s1">updateHiddenUsersList();</span>
+    <span class="s1">}</span>
+
+    <span class="s6">function </span><span class="s1">createMessageElement(messageData) {</span>
+        <span class="s6">const </span><span class="s1">messageElement = document.createElement(</span><span class="s3">'div'</span><span class="s1">);</span>
+        <span class="s1">messageElement.classList.add(</span><span class="s3">'message'</span><span class="s1">);</span>
+
+        <span class="s6">const </span><span class="s1">usernameElement = document.createElement(</span><span class="s3">'span'</span><span class="s1">);</span>
+        <span class="s1">usernameElement.textContent = messageData.username;</span>
+        <span class="s1">usernameElement.style.color = messageData.color;</span>
+
+        <span class="s6">const </span><span class="s1">messageTextElement = document.createElement(</span><span class="s3">'span'</span><span class="s1">);</span>
+        <span class="s1">messageTextElement.textContent = messageData.whisper ? </span><span class="s3">`: (whisper) </span><span class="s1">${messageData.message}</span><span class="s3">` </span><span class="s1">: </span><span class="s3">`: </span><span class="s1">${messageData.message}</span><span class="s3">`</span><span class="s1">;</span>
+
+        <span class="s1">messageElement.appendChild(usernameElement);</span>
+        <span class="s1">messageElement.appendChild(messageTextElement);</span>
+
+        <span class="s7">// Create a dropdown for actions</span>
+        <span class="s6">const </span><span class="s1">dropdown = document.createElement(</span><span class="s3">'div'</span><span class="s1">);</span>
+        <span class="s1">dropdown.className = </span><span class="s3">'dropdown'</span><span class="s1">;</span>
+        <span class="s1">usernameElement.onclick = () =&gt; {</span>
+            <span class="s1">dropdown.style.display = dropdown.style.display === </span><span class="s3">'block' </span><span class="s1">? </span><span class="s3">'none' </span><span class="s1">: </span><span class="s3">'block'</span><span class="s1">; </span><span class="s7">// Toggle dropdown</span>
+        <span class="s1">};</span>
+
+        <span class="s6">const </span><span class="s1">hideUserButton = document.createElement(</span><span class="s3">'button'</span><span class="s1">);</span>
+        <span class="s1">hideUserButton.textContent = </span><span class="s3">'Hide User'</span><span class="s1">;</span>
+        <span class="s1">hideUserButton.onclick = () =&gt; {</span>
+            <span class="s1">toggleUserMessages(messageData.username);</span>
+            <span class="s1">dropdown.style.display = </span><span class="s3">'none'</span><span class="s1">; </span><span class="s7">// Close dropdown after action</span>
+        <span class="s1">};</span>
+
+        <span class="s6">const </span><span class="s1">whisperButton = document.createElement(</span><span class="s3">'button'</span><span class="s1">);</span>
+        <span class="s1">whisperButton.textContent = </span><span class="s3">'Whisper'</span><span class="s1">;</span>
+        <span class="s1">whisperButton.onclick = () =&gt; {</span>
+            <span class="s6">const </span><span class="s1">whisperMessage = prompt(</span><span class="s3">`Whisper to </span><span class="s1">${messageData.username}</span><span class="s3">:`</span><span class="s1">);</span>
+            <span class="s6">if </span><span class="s1">(whisperMessage) {</span>
+                <span class="s6">const </span><span class="s1">whisperData = { type: </span><span class="s3">'whisper'</span><span class="s1">, recipient: messageData.username, message: whisperMessage, username, color: userColor };</span>
+                <span class="s1">socket.send(JSON.stringify(whisperData));</span>
+            <span class="s1">}</span>
+            <span class="s1">dropdown.style.display = </span><span class="s3">'none'</span><span class="s1">; </span><span class="s7">// Close dropdown after action</span>
+        <span class="s1">};</span>
+
+        <span class="s1">dropdown.appendChild(hideUserButton);</span>
+        <span class="s1">dropdown.appendChild(whisperButton);</span>
+        <span class="s1">messageElement.appendChild(dropdown);</span>
+
+        <span class="s6">return </span><span class="s1">messageElement;</span>
+    <span class="s1">}</span>
+
+    <span class="s6">function </span><span class="s1">updateHiddenUsersList() {</span>
+        <span class="s6">const </span><span class="s1">hiddenUsersDiv = document.getElementById(</span><span class="s3">'hiddenUsers'</span><span class="s1">);</span>
+        <span class="s6">const </span><span class="s1">hiddenUsersList = document.getElementById(</span><span class="s3">'hiddenUsersList'</span><span class="s1">);</span>
+        <span class="s1">hiddenUsersList.innerHTML = </span><span class="s3">''</span><span class="s1">; </span><span class="s7">// Clear previous list</span>
+
+        <span class="s1">hiddenMessages.forEach(hiddenUser =&gt; {</span>
+            <span class="s6">const </span><span class="s1">userElement = document.createElement(</span><span class="s3">'div'</span><span class="s1">);</span>
+            <span class="s1">userElement.className = </span><span class="s3">'hiddenUser'</span><span class="s1">;</span>
+            <span class="s1">userElement.textContent = hiddenUser;</span>
+            <span class="s1">userElement.onclick = () =&gt; toggleUserMessages(hiddenUser); </span><span class="s7">// Unhide on click</span>
+            <span class="s1">hiddenUsersList.appendChild(userElement);</span>
+        <span class="s1">});</span>
+
+        <span class="s1">hiddenUsersDiv.style.display = hiddenMessages.size &gt; </span><span class="s5">0 </span><span class="s1">? </span><span class="s3">'block' </span><span class="s1">: </span><span class="s3">'none'</span><span class="s1">; </span><span class="s7">// Show or hide hidden users section</span>
+    <span class="s1">}</span>
+
+    <span class="s1">document.getElementById(</span><span class="s3">'setUsernameButton'</span><span class="s1">).onclick = </span><span class="s6">function</span><span class="s1">() {</span>
+        <span class="s6">const </span><span class="s1">usernameInput = document.getElementById(</span><span class="s3">'usernameInput'</span><span class="s1">);</span>
+        <span class="s1">username = usernameInput.value.trim();</span>
+        <span class="s1">userColor = document.getElementById(</span><span class="s3">'colorInput'</span><span class="s1">).value; </span><span class="s7">// Get the selected color</span>
+
+        <span class="s6">if </span><span class="s1">(username) {</span>
+            <span class="s1">document.getElementById(</span><span class="s3">'usernameSection'</span><span class="s1">).style.display = </span><span class="s3">'none'</span><span class="s1">;</span>
+            <span class="s1">document.getElementById(</span><span class="s3">'messageInput'</span><span class="s1">).style.display = </span><span class="s3">'block'</span><span class="s1">;</span>
+            <span class="s1">document.getElementById(</span><span class="s3">'sendButton'</span><span class="s1">).style.display = </span><span class="s3">'block'</span><span class="s1">;</span>
+            <span class="s1">socket.send(JSON.stringify({ type: </span><span class="s3">'setUsername'</span><span class="s1">, username, color: userColor })); </span><span class="s7">// Set username on the server</span>
+            <span class="s1">console.log(</span><span class="s3">'Username set:'</span><span class="s1">, username, </span><span class="s3">'Color:'</span><span class="s1">, userColor);</span>
+        <span class="s1">} </span><span class="s6">else </span><span class="s1">{</span>
+            <span class="s1">console.log(</span><span class="s3">'Please enter a valid username.'</span><span class="s1">);</span>
+        <span class="s1">}</span>
+    <span class="s1">};</span>
+
+    <span class="s1">document.getElementById(</span><span class="s3">'sendButton'</span><span class="s1">).onclick = </span><span class="s6">function</span><span class="s1">() {</span>
+        <span class="s6">const </span><span class="s1">messageInput = document.getElementById(</span><span class="s3">'messageInput'</span><span class="s1">);</span>
+        <span class="s6">const </span><span class="s1">message = messageInput.value.trim();</span>
+
+        <span class="s6">if </span><span class="s1">(message) {</span>
+            <span class="s6">const </span><span class="s1">fullMessage = { username, color: userColor, message, type: </span><span class="s3">'message' </span><span class="s1">};</span>
+            <span class="s1">socket.send(JSON.stringify(fullMessage));</span>
+            <span class="s1">messageInput.value = </span><span class="s3">''</span><span class="s1">; </span><span class="s7">// Clear input field</span>
+        <span class="s1">} </span><span class="s6">else </span><span class="s1">{</span>
+            <span class="s1">console.log(</span><span class="s3">'No message to send'</span><span class="s1">);</span>
+        <span class="s1">}</span>
+    <span class="s1">};</span>
+
+    <span class="s1">document.getElementById(</span><span class="s3">'messageInput'</span><span class="s1">).addEventListener(</span><span class="s3">'keypress'</span><span class="s1">, </span><span class="s6">function</span><span class="s1">(event) {</span>
+        <span class="s6">if </span><span class="s1">(event.key === </span><span class="s3">'Enter'</span><span class="s1">) {</span>
+            <span class="s1">document.getElementById(</span><span class="s3">'sendButton'</span><span class="s1">).click();</span>
+        <span class="s1">}</span>
+    <span class="s1">});</span>
+
+    <span class="s7">// Show username input initially</span>
+    <span class="s1">document.getElementById(</span><span class="s3">'usernameSection'</span><span class="s1">).style.display = </span><span class="s3">'block'</span><span class="s1">;</span>
+<span class="s0">&lt;/script&gt;</span>
+
+<span class="s0">&lt;/body&gt;</span>
+<span class="s0">&lt;/html&gt;</span>
+</pre>
+</body>
+</html>
